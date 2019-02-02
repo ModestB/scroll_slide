@@ -1,21 +1,58 @@
 .ss-container{
   position: relative;
+  overflow: hidden;
   height: 500px;
   width: 900px;
   .ss-item{
     position: absolute;
     z-index: 0;
     height: 100%;
-    width: 100%;
-    transition: all 1s ease-in-out;
+    width: 100%;   
     &.active{
-      z-index: 1;
-     
+      
     }
-    &.ss-fade-in{
+    &.ss-fade{
+      transition: all 1s ease-in-out;
       opacity: 0;
       &.active{
         opacity: 1;
+        z-index: 1;  
+      }
+    }
+    &.ss-move-up{
+      transition: all 1s ease-in-out;
+      bottom: -100%;
+      &.active{
+        transition-delay: 1s;
+        bottom: 0;
+        z-index: 1;  
+      }
+    }
+    &.ss-move-down{
+      transition: all 1s ease-in-out;
+      top: -100%;
+      &.active{
+        transition-delay: 1s;
+        top: 0;
+        z-index: 1;  
+      }
+    }
+    &.ss-move-right{
+      transition: all 1s ease-in-out;
+      left: -100%;
+      &.active{
+        transition-delay: 1s;
+        left: 0;
+        z-index: 1;  
+      }
+    }
+    &.ss-move-left{
+      transition: all 1s ease-in-out;
+      right: -100%;
+      &.active{
+        transition-delay: 1s;
+        right: 0;
+        z-index: 1;  
       }
     }
   }

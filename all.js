@@ -1,5 +1,3 @@
-
-
 function scrollSlide (scrollContainer, scrollItem, ssAnimType) {
   const scrollContainerEle = document.querySelector(scrollContainer);
   const scrollItems = Array.from(document.querySelectorAll(`${scrollContainer} ${scrollItem}`));
@@ -67,22 +65,30 @@ function scrollSlide (scrollContainer, scrollItem, ssAnimType) {
           height = scrollContainerEle.clientHeight;
           
       let delta = (event.wheelDelta) ? event.wheelDelta : -(event.detail || 0);
-      
+      // console.log(`scrollTop ${screenTop}  height ${height} scrollHeight ${scrollHeight}`)
       if ((delta > 0 && scrollTop - delta <= 0) || (delta < 0 && scrollTop + height >= scrollHeight-1)) {
         if(delta > 0) {
 
           if(animTimeOut) {
             changeScrollSlide(false);
-            stopScrollAnim(1000);  
+            stopScrollAnim(2000);  
           }
           
         } else {
           if(animTimeOut){
             changeScrollSlide(true);
-            stopScrollAnim(1000);  
+            stopScrollAnim(2000);  
           }         
         }      
         event.preventDefault();
+      } else {
+         if(delta < 0) {
+          if(animTimeOut){
+            changeScrollSlide(true);
+            stopScrollAnim(2000);  
+          } 
+         }
+         event.preventDefault();
       }
     })
   }())
