@@ -1,8 +1,9 @@
 let scrollTimeOut = true;
 
-function scrollSlide (scrollContainer, scrollItem) {
+function scrollSlide (scrollContainer, scrollItem, ssAnimType) {
   const scrollContainerEle = document.querySelector(scrollContainer);
  
+  findAnimationType(scrollContainer, scrollItem, ssAnimType)
   return (function () {
     let eventType;
     let isFirefox = navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
@@ -26,19 +27,36 @@ function scrollSlide (scrollContainer, scrollItem) {
 
           if(scrollTimeOut) {
             changeScrollSlide(scrollContainer, scrollItem, false);
-            stopScrollAnim(300);  
+            stopScrollAnim(1000);  
           }
           
         } else {
           if(scrollTimeOut){
             changeScrollSlide(scrollContainer, scrollItem, true);
-            stopScrollAnim(300);  
+            stopScrollAnim(1000);  
           }         
         }      
         event.preventDefault();
       }
     })
   }())
+}
+
+function addAnimationClasses(scrollContainer, scrollItem, ssAnimClass) {
+  let scrollItems = Array.from(document.querySelectorAll(`${scrollContainer} ${scrollItem}`));
+  scrollItems.forEach((item) => {
+    item.classList.add(ssAnimClass);
+  })
+}
+
+function findAnimationType (scrollContainer, scrollItem, ssAnimType) {
+  switch(ssAnimType) {
+    case 'ss-fade-in':
+      addAnimationClasses(scrollContainer, scrollItem, 'ss-fade-in')
+      break;
+    default:
+      // code block
+  }
 }
 
 function stopScrollAnim (timeoutTime) {

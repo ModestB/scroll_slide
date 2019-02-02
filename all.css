@@ -6,9 +6,16 @@
     position: absolute;
     z-index: 0;
     height: 100%;
-    width: 100%; }
+    width: 100%;
+    -webkit-transition: all 1s ease-in-out;
+    -o-transition: all 1s ease-in-out;
+    transition: all 1s ease-in-out; }
     .ss-container .ss-item.active {
       z-index: 1; }
+    .ss-container .ss-item.ss-fade-in {
+      opacity: 0; }
+      .ss-container .ss-item.ss-fade-in.active {
+        opacity: 1; }
 
 body {
   overflow: hidden;

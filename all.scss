@@ -7,8 +7,16 @@
     z-index: 0;
     height: 100%;
     width: 100%;
+    transition: all 1s ease-in-out;
     &.active{
       z-index: 1;
+     
+    }
+    &.ss-fade-in{
+      opacity: 0;
+      &.active{
+        opacity: 1;
+      }
     }
   }
 }
