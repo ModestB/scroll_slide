@@ -1,9 +1,55 @@
-let scrollTimeOut = true;
+
 
 function scrollSlide (scrollContainer, scrollItem, ssAnimType) {
   const scrollContainerEle = document.querySelector(scrollContainer);
- 
-  findAnimationType(scrollContainer, scrollItem, ssAnimType)
+  const scrollItems = Array.from(document.querySelectorAll(`${scrollContainer} ${scrollItem}`));
+  let animTimeOut = true;
+
+  // NOTE:
+  // INNER FUNCTIONS DECLARATION
+  function addAnimationClasses() {
+    scrollItems.forEach((item) => {
+      item.classList.add(ssAnimType);
+    })
+  }
+  
+  function stopScrollAnim (timeoutTime) {
+    if(animTimeOut){animTimeOut = false}
+    setTimeout( () => {
+      animTimeOut = true;
+    }, timeoutTime)
+  }
+  
+  function changeScrollSlide(moveDown) {
+    let activeItem = scrollItems.find((item) => {
+      return item.classList.contains('active');
+    })
+    let nextItem; 
+  
+    if(moveDown) {
+      nextItem = scrollItems[scrollItems.indexOf(activeItem)+1]
+    } else {
+      nextItem = scrollItems[scrollItems.indexOf(activeItem)-1]
+    }
+    
+    if(nextItem){
+      activeItem.classList.remove('active');
+      nextItem.classList.add('active');
+    } else {
+      activeItem.classList.remove('active');
+      if(moveDown) {
+        scrollItems[0].classList.add('active');
+      } else {
+        scrollItems[scrollItems.length - 1].classList.add('active');
+      }  
+    }
+  }
+
+  // NOTE:
+  // INNER FUNCTION CALLS
+  addAnimationClasses()
+
+
   return (function () {
     let eventType;
     let isFirefox = navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
@@ -25,14 +71,14 @@ function scrollSlide (scrollContainer, scrollItem, ssAnimType) {
       if ((delta > 0 && scrollTop - delta <= 0) || (delta < 0 && scrollTop + height >= scrollHeight-1)) {
         if(delta > 0) {
 
-          if(scrollTimeOut) {
-            changeScrollSlide(scrollContainer, scrollItem, false);
+          if(animTimeOut) {
+            changeScrollSlide(false);
             stopScrollAnim(1000);  
           }
           
         } else {
-          if(scrollTimeOut){
-            changeScrollSlide(scrollContainer, scrollItem, true);
+          if(animTimeOut){
+            changeScrollSlide(true);
             stopScrollAnim(1000);  
           }         
         }      
@@ -40,54 +86,4 @@ function scrollSlide (scrollContainer, scrollItem, ssAnimType) {
       }
     })
   }())
-}
-
-function addAnimationClasses(scrollContainer, scrollItem, ssAnimClass) {
-  let scrollItems = Array.from(document.querySelectorAll(`${scrollContainer} ${scrollItem}`));
-  scrollItems.forEach((item) => {
-    item.classList.add(ssAnimClass);
-  })
-}
-
-function findAnimationType (scrollContainer, scrollItem, ssAnimType) {
-  switch(ssAnimType) {
-    case 'ss-fade-in':
-      addAnimationClasses(scrollContainer, scrollItem, 'ss-fade-in')
-      break;
-    default:
-      // code block
-  }
-}
-
-function stopScrollAnim (timeoutTime) {
-  if(scrollTimeOut){scrollTimeOut = false}
-  setTimeout( () => {
-    scrollTimeOut = true;
-  }, timeoutTime)
-}
-
-function changeScrollSlide(scrollContainer, scrollItem, moveDown) {
-  let scrollItems = Array.from(document.querySelectorAll(`${scrollContainer} ${scrollItem}`));
-  let activeItem = scrollItems.find((item) => {
-    return item.classList.contains('active');
-  })
-  let nextItem; 
-
-  if(moveDown) {
-    nextItem = scrollItems[scrollItems.indexOf(activeItem)+1]
-  } else {
-    nextItem = scrollItems[scrollItems.indexOf(activeItem)-1]
-  }
-  
-  if(nextItem){
-    activeItem.classList.remove('active');
-    nextItem.classList.add('active');
-  } else {
-    activeItem.classList.remove('active');
-    if(moveDown) {
-      scrollItems[0].classList.add('active');
-    } else {
-      scrollItems[scrollItems.length - 1].classList.add('active');
-    }  
-  }
 }
