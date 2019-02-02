@@ -7,19 +7,16 @@
     position: absolute;
     z-index: 0;
     height: 100%;
-    width: 100%; }
+    width: 100%;
+    -webkit-transition-timing-function: ease-in-out;
+    -o-transition-timing-function: ease-in-out;
+    transition-timing-function: ease-in-out; }
     .ss-container .ss-item.ss-fade {
-      -webkit-transition: all 1s ease-in-out;
-      -o-transition: all 1s ease-in-out;
-      transition: all 1s ease-in-out;
       opacity: 0; }
       .ss-container .ss-item.ss-fade.active {
         opacity: 1;
         z-index: 1; }
     .ss-container .ss-item.ss-move-up {
-      -webkit-transition: all 1s ease-in-out;
-      -o-transition: all 1s ease-in-out;
-      transition: all 1s ease-in-out;
       bottom: -100%; }
       .ss-container .ss-item.ss-move-up.active {
         -webkit-transition-delay: 1s;
@@ -28,9 +25,6 @@
         bottom: 0;
         z-index: 1; }
     .ss-container .ss-item.ss-move-down {
-      -webkit-transition: all 1s ease-in-out;
-      -o-transition: all 1s ease-in-out;
-      transition: all 1s ease-in-out;
       top: -100%; }
       .ss-container .ss-item.ss-move-down.active {
         -webkit-transition-delay: 1s;
@@ -39,9 +33,6 @@
         top: 0;
         z-index: 1; }
     .ss-container .ss-item.ss-move-right {
-      -webkit-transition: all 1s ease-in-out;
-      -o-transition: all 1s ease-in-out;
-      transition: all 1s ease-in-out;
       left: -100%; }
       .ss-container .ss-item.ss-move-right.active {
         -webkit-transition-delay: 1s;
@@ -50,14 +41,8 @@
         left: 0;
         z-index: 1; }
     .ss-container .ss-item.ss-move-left {
-      -webkit-transition: all 1s ease-in-out;
-      -o-transition: all 1s ease-in-out;
-      transition: all 1s ease-in-out;
       right: -100%; }
       .ss-container .ss-item.ss-move-left.active {
-        -webkit-transition-delay: 1s;
-        -o-transition-delay: 1s;
-        transition-delay: 1s;
         right: 0;
         z-index: 1; }
 
