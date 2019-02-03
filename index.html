@@ -24,7 +24,14 @@
   <script type="text/javascript" src="./all.js"></script>
 
   <script>
-    scrollSlide('.ss-container', '.ss-item', 'ss-move-up', 1, 0, true)
+    scrollSlide({
+      container: ".ss-container",
+      item: ".ss-item",
+      animType: "ss-move-up",
+      duration: 1,
+      delay: 0,
+      uncutMove: true
+    })
   </script>
 </body>
 

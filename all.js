@@ -1,6 +1,7 @@
-function scrollSlide (scrollContainer, scrollItem, ssAnimType, ssAnimDuration, ssAnimDelay, loop) {
-  const scrollContainerEle = document.querySelector(scrollContainer);
-  const scrollItems = Array.from(document.querySelectorAll(`${scrollContainer} ${scrollItem}`));
+function scrollSlide (args) {
+  //args.container, args.item, args.animType, args.duration, args.delay, args.uncutMove
+  const scrollContainerEle = document.querySelector(args.container);
+  const scrollItems = Array.from(document.querySelectorAll(`${args.container} ${args.item}`));
 
   let allowAnimation = true;
   let allowAnimationTimeout;
@@ -9,7 +10,7 @@ function scrollSlide (scrollContainer, scrollItem, ssAnimType, ssAnimDuration, s
   // INNER FUNCTIONS DECLARATION
   function addAnimationClasses() {
     scrollItems.forEach((item) => {
-      item.classList.add(ssAnimType);
+      item.classList.add(args.animType);
     })
   }
 
@@ -48,13 +49,13 @@ function scrollSlide (scrollContainer, scrollItem, ssAnimType, ssAnimDuration, s
 
   function addAnimationDuration() {
     scrollItems.forEach((item) => {
-      item.style.transitionDuration = `${ssAnimDuration}s`;
+      item.style.transitionDuration = `${args.duration}s`;
       addAnimationDelay(item)
     })
   }
 
   function addAnimationDelay(item) {
-    item.style.transitionDelay = `${ssAnimDelay}s`; 
+    item.style.transitionDelay = `${args.delay}s`; 
   }
  
   function stopScrollAnim () {
@@ -65,7 +66,7 @@ function scrollSlide (scrollContainer, scrollItem, ssAnimType, ssAnimDuration, s
       scrollItems.forEach((item) => {
         item.classList.remove('ss-moving');
       })
-    }, (ssAnimDuration + ssAnimDelay) * 1000)
+    }, (args.duration + args.delay) * 1000)
   }
   
   function changeScrollSlide(moveDown) {
@@ -87,7 +88,7 @@ function scrollSlide (scrollContainer, scrollItem, ssAnimType, ssAnimDuration, s
       activeItem.classList.remove('active');
       nextItem.classList.add('active');
     
-      if(loop){ addLoppAnimClasses()}
+      if(args.uncutMove){ addLoppAnimClasses()}
     
     } else {
       activeItem.classList.add('ss-moving');
@@ -97,12 +98,12 @@ function scrollSlide (scrollContainer, scrollItem, ssAnimType, ssAnimDuration, s
         scrollItems[0].classList.add('ss-moving');
         scrollItems[0].classList.add('active');
         
-        if(loop){ addLoppAnimClasses()}
+        if(args.uncutMove){ addLoppAnimClasses()}
       } else {
         scrollItems[scrollItems.length - 1].classList.add('ss-moving');
         scrollItems[scrollItems.length - 1].classList.add('active');
        
-        if(loop){ addLoppAnimClasses()}
+        if(args.uncutMove){ addLoppAnimClasses()}
       }  
     }
   }
@@ -110,7 +111,7 @@ function scrollSlide (scrollContainer, scrollItem, ssAnimType, ssAnimDuration, s
   // NOTE:
   // INNER FUNCTION CALLS
   addAnimationClasses()
-  if(loop){ addLoppAnimClasses()}
+  if(args.uncutMove){ addLoppAnimClasses()}
   addAnimationDuration()
 
 
