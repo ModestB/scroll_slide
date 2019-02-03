@@ -43,10 +43,6 @@ function scrollSlide (scrollContainer, scrollItem, ssAnimType, ssAnimDuration, s
 
       }  
     })
-
-    // nextItem.classList.remove('ss-move-right-prev');
-    // prevItem.classList.remove('ss-move-right-next');
- 
   }
   
 
@@ -60,11 +56,7 @@ function scrollSlide (scrollContainer, scrollItem, ssAnimType, ssAnimDuration, s
   function addAnimationDelay(item) {
     item.style.transitionDelay = `${ssAnimDelay}s`; 
   }
-
-  function removeAnimationDelay(item) {
-    item.style.transitionDelay = '0s'; 
-  }
-  
+ 
   function stopScrollAnim () {
     if(allowAnimation){allowAnimation = false}
     allowAnimationTimeout = setTimeout( () => {
@@ -90,23 +82,27 @@ function scrollSlide (scrollContainer, scrollItem, ssAnimType, ssAnimDuration, s
     }
     
     if(nextItem){
-      activeItem.classList.remove('active');
-      nextItem.classList.add('active');
       activeItem.classList.add('ss-moving');
       nextItem.classList.add('ss-moving');
-      addLoppAnimClasses ()
+      activeItem.classList.remove('active');
+      nextItem.classList.add('active');
+    
+      if(loop){ addLoppAnimClasses()}
     
     } else {
-      activeItem.classList.remove('active');
       activeItem.classList.add('ss-moving');
+      activeItem.classList.remove('active');
+      
       if(moveDown) {
-        scrollItems[0].classList.add('active');
         scrollItems[0].classList.add('ss-moving');
-        addLoppAnimClasses ()
+        scrollItems[0].classList.add('active');
+        
+        if(loop){ addLoppAnimClasses()}
       } else {
-        scrollItems[scrollItems.length - 1].classList.add('active');
         scrollItems[scrollItems.length - 1].classList.add('ss-moving');
-        addLoppAnimClasses ()
+        scrollItems[scrollItems.length - 1].classList.add('active');
+       
+        if(loop){ addLoppAnimClasses()}
       }  
     }
   }
@@ -114,7 +110,7 @@ function scrollSlide (scrollContainer, scrollItem, ssAnimType, ssAnimDuration, s
   // NOTE:
   // INNER FUNCTION CALLS
   addAnimationClasses()
-  addLoppAnimClasses()
+  if(loop){ addLoppAnimClasses()}
   addAnimationDuration()
 
 

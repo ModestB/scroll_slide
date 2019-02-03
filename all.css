@@ -26,7 +26,7 @@
         top: -100%; }
       .ss-container .ss-item.ss-move-up.active {
         top: 0;
-        z-index: 1; }
+        z-index: 1000 !important; }
     .ss-container .ss-item.ss-move-down {
       top: -100%; }
       .ss-container .ss-item.ss-move-down.ss-move-next {
@@ -35,7 +35,7 @@
         top: 100%; }
       .ss-container .ss-item.ss-move-down.active {
         top: 0;
-        z-index: 1; }
+        z-index: 1000 !important; }
     .ss-container .ss-item.ss-move-right {
       right: 100%; }
       .ss-container .ss-item.ss-move-right.ss-move-next {
@@ -44,7 +44,7 @@
         right: -100%; }
       .ss-container .ss-item.ss-move-right.active {
         right: 0 !important;
-        z-index: 1; }
+        z-index: 1000 !important; }
     .ss-container .ss-item.ss-move-left {
       right: -100%; }
       .ss-container .ss-item.ss-move-left.ss-move-next {
@@ -53,7 +53,7 @@
         right: 100%; }
       .ss-container .ss-item.ss-move-left.active {
         right: 0;
-        z-index: 1; }
+        z-index: 1000 !important; }
 
 body {
   overflow: hidden;
