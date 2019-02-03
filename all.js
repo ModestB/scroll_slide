@@ -1,8 +1,9 @@
-function scrollSlide (scrollContainer, scrollItem, ssAnimType, ssAnimDuration, ssAnimDelay) {
+function scrollSlide (scrollContainer, scrollItem, ssAnimType, ssAnimDuration, ssAnimDelay, loop) {
   const scrollContainerEle = document.querySelector(scrollContainer);
   const scrollItems = Array.from(document.querySelectorAll(`${scrollContainer} ${scrollItem}`));
 
   let allowAnimation = true;
+  let allowAnimationTimeout;
 
   // NOTE:
   // INNER FUNCTIONS DECLARATION
@@ -12,9 +13,47 @@ function scrollSlide (scrollContainer, scrollItem, ssAnimType, ssAnimDuration, s
     })
   }
 
+  function addLoppAnimClasses () {
+    let activeItem = scrollItems.find((item) => {
+      return item.classList.contains('active');
+    })
+
+    let nextItem = scrollItems[scrollItems.indexOf(activeItem)+1];
+    let prevItem = scrollItems[scrollItems.indexOf(activeItem)-1];
+
+    if(!nextItem) {
+      nextItem = scrollItems[0];
+    };
+   
+    if(!prevItem) {
+      prevItem = scrollItems[scrollItems.length - 1];
+    };
+    let itemsProceed = 0;
+    console.log('%c Remove Classes', 'background-color: red;')
+    scrollItems.forEach((item) => {
+      itemsProceed++; 
+
+      item.classList.remove('ss-move-prev') 
+      item.classList.remove('ss-move-next') 
+      console.log(itemsProceed + " | " + scrollItems.length)
+
+      if(itemsProceed === scrollItems.length){
+        nextItem.classList.add('ss-move-next');
+        prevItem.classList.add('ss-move-prev');
+
+      }  
+    })
+
+    // nextItem.classList.remove('ss-move-right-prev');
+    // prevItem.classList.remove('ss-move-right-next');
+ 
+  }
+  
+
   function addAnimationDuration() {
     scrollItems.forEach((item) => {
       item.style.transitionDuration = `${ssAnimDuration}s`;
+      addAnimationDelay(item)
     })
   }
 
@@ -28,12 +67,17 @@ function scrollSlide (scrollContainer, scrollItem, ssAnimType, ssAnimDuration, s
   
   function stopScrollAnim () {
     if(allowAnimation){allowAnimation = false}
-    setTimeout( () => {
+    allowAnimationTimeout = setTimeout( () => {
       allowAnimation = true;
+
+      scrollItems.forEach((item) => {
+        item.classList.remove('ss-moving');
+      })
     }, (ssAnimDuration + ssAnimDelay) * 1000)
   }
   
   function changeScrollSlide(moveDown) {
+    console.log(moveDown)
     let activeItem = scrollItems.find((item) => {
       return item.classList.contains('active');
     })
@@ -48,23 +92,29 @@ function scrollSlide (scrollContainer, scrollItem, ssAnimType, ssAnimDuration, s
     if(nextItem){
       activeItem.classList.remove('active');
       nextItem.classList.add('active');
-      addAnimationDelay(nextItem);
+      activeItem.classList.add('ss-moving');
+      nextItem.classList.add('ss-moving');
+      addLoppAnimClasses ()
+    
     } else {
       activeItem.classList.remove('active');
+      activeItem.classList.add('ss-moving');
       if(moveDown) {
         scrollItems[0].classList.add('active');
-        addAnimationDelay(scrollItems[0]);
+        scrollItems[0].classList.add('ss-moving');
+        addLoppAnimClasses ()
       } else {
         scrollItems[scrollItems.length - 1].classList.add('active');
-        addAnimationDelay(scrollItems[scrollItems.length - 1]);
+        scrollItems[scrollItems.length - 1].classList.add('ss-moving');
+        addLoppAnimClasses ()
       }  
     }
-    removeAnimationDelay(activeItem)
   }
 
   // NOTE:
   // INNER FUNCTION CALLS
   addAnimationClasses()
+  addLoppAnimClasses()
   addAnimationDuration()
 
 
@@ -90,22 +140,22 @@ function scrollSlide (scrollContainer, scrollItem, ssAnimType, ssAnimDuration, s
         if(delta > 0) {
 
           if(allowAnimation) {
-            changeScrollSlide(false);
-            stopScrollAnim();  
+            stopScrollAnim()
+            changeScrollSlide(false)
           }
           
         } else {
           if(allowAnimation){
+            stopScrollAnim()
             changeScrollSlide(true);
-            stopScrollAnim();  
           }         
         }      
         event.preventDefault();
       } else {
          if(delta < 0) {
-          if(allowAnimation){
+          if(allowAnimation){  
+            stopScrollAnim()
             changeScrollSlide(true);
-            stopScrollAnim();  
           } 
          }
          event.preventDefault();

@@ -5,43 +5,52 @@
   width: 900px; }
   .ss-container .ss-item {
     position: absolute;
-    z-index: 0;
+    z-index: -100;
     height: 100%;
     width: 100%;
     -webkit-transition-timing-function: ease-in-out;
     -o-transition-timing-function: ease-in-out;
     transition-timing-function: ease-in-out; }
+    .ss-container .ss-item.ss-moving {
+      z-index: 100 !important; }
     .ss-container .ss-item.ss-fade {
       opacity: 0; }
       .ss-container .ss-item.ss-fade.active {
         opacity: 1;
         z-index: 1; }
     .ss-container .ss-item.ss-move-up {
-      bottom: -100%; }
+      top: 100%; }
+      .ss-container .ss-item.ss-move-up.ss-move-next {
+        top: 100%; }
+      .ss-container .ss-item.ss-move-up.ss-move-prev {
+        top: -100%; }
       .ss-container .ss-item.ss-move-up.active {
-        -webkit-transition-delay: 1s;
-        -o-transition-delay: 1s;
-        transition-delay: 1s;
-        bottom: 0;
+        top: 0;
         z-index: 1; }
     .ss-container .ss-item.ss-move-down {
       top: -100%; }
+      .ss-container .ss-item.ss-move-down.ss-move-next {
+        top: -100%; }
+      .ss-container .ss-item.ss-move-down.ss-move-prev {
+        top: 100%; }
       .ss-container .ss-item.ss-move-down.active {
-        -webkit-transition-delay: 1s;
-        -o-transition-delay: 1s;
-        transition-delay: 1s;
         top: 0;
         z-index: 1; }
     .ss-container .ss-item.ss-move-right {
-      left: -100%; }
+      right: 100%; }
+      .ss-container .ss-item.ss-move-right.ss-move-next {
+        right: 100%; }
+      .ss-container .ss-item.ss-move-right.ss-move-prev {
+        right: -100%; }
       .ss-container .ss-item.ss-move-right.active {
-        -webkit-transition-delay: 1s;
-        -o-transition-delay: 1s;
-        transition-delay: 1s;
-        left: 0;
+        right: 0 !important;
         z-index: 1; }
     .ss-container .ss-item.ss-move-left {
       right: -100%; }
+      .ss-container .ss-item.ss-move-left.ss-move-next {
+        right: -100%; }
+      .ss-container .ss-item.ss-move-left.ss-move-prev {
+        right: 100%; }
       .ss-container .ss-item.ss-move-left.active {
         right: 0;
         z-index: 1; }

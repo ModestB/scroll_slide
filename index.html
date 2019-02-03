@@ -8,13 +8,13 @@
 <body>
   <h1>Scroll Slide</h1>
   <div class="ss-container">
-    <div class="ss-item active" style="background-color: #FD4D0C;">
+    <div class="ss-item ss-loop active" style="background-color: #FD4D0C;">
       <h1>1</h1>
     </div>
-    <div class="ss-item" style="background-color: #CBE432;">
+    <div class="ss-item ss-loop" style="background-color: #CBE432;">
       <h1>2</h1>
     </div>
-    <div class="ss-item" style="background-color: #2E2FE3;">
+    <div class="ss-item ss-loop" style="background-color: #2E2FE3;">
       <h1>3</h1>
     </div>
   </div>
@@ -24,7 +24,7 @@
   <script type="text/javascript" src="./all.js"></script>
 
   <script>
-    scrollSlide('.ss-container', '.ss-item', 'ss-fade', 2, 0)
+    scrollSlide('.ss-container', '.ss-item', 'ss-move-up', 1, 0, true)
   </script>
 </body>
 
