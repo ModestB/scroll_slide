@@ -20,10 +20,17 @@ Simple slide show using only the mouse-wheel/touchpad scroll.
 ```
 ```javascript
   //Initialize
-  scrollSlide('.ss-container', '.ss-item');
+  scrollSlide({
+      container: '.ss-container', // Container of slides
+      item: '.ss-item',           // Individual slides    
+      animType: 'ss-move-up',     // Animation type: ss-fade, ss-move-right, ss-move-left, ss-move-up, ss-move-down
+      duration: 1,                // Animation transition duration
+      delay: 0,                   // Animation transition delay
+      uncutMove: true             // One slide immediately follows another
+  });
 
 ```
 
 ## Preview
 
-[modestas-bujanauskas/pen/exJwQq](https://codepen.io/modestas-bujanauskas/pen/exJwQq)
+[modestas-bujanauskas/pen/exJwQq](https://codepen.io/collection/DLLxMW/)
