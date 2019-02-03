@@ -23,12 +23,13 @@ Simple slide show using only the mouse-wheel/touchpad scroll.
   scrollSlide({
       container: '.ss-container', // Container of slides
       item: '.ss-item',           // Individual slides    
-      animType: 'ss-move-up',     // Animation type: ss-fade, ss-move-right, ss-move-left, ss-move-up, ss-move-down
+      animType: 'ss-move-up',     // Animation type
       duration: 1,                // Animation transition duration
       delay: 0,                   // Animation transition delay
       uncutMove: true             // One slide immediately follows another
   });
 
+Animation types: ss-fade, ss-move-right, ss-move-left, ss-move-up, ss-move-down
 ```
 
 ## Preview
