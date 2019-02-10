@@ -54,6 +54,37 @@
       .ss-container .ss-item.ss-move-left.active {
         right: 0;
         z-index: 1000 !important; }
+  .ss-container .ss-indicator-container {
+    position: absolute;
+    z-index: 10000;
+    right: 0;
+    height: 100%;
+    width: 2%;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    padding: 0 10px; }
+    .ss-container .ss-indicator-container .ss-indicator {
+      margin: 4px 0;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background-color: #000; }
+      .ss-container .ss-indicator-container .ss-indicator.active {
+        width: 7px;
+        height: 7px;
+        border: 1px solid #000;
+        background-color: transparent; }
 
 body {
   overflow: hidden;

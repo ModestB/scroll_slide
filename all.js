@@ -2,6 +2,7 @@ function scrollSlide (args) {
   //args.container, args.item, args.animType, args.duration, args.delay, args.uncutMove
   const scrollContainerEle = document.querySelector(args.container);
   const scrollItems = Array.from(document.querySelectorAll(`${args.container} ${args.item}`));
+  let indicatorArr = [];
 
   let allowAnimation = true;
   let allowAnimationTimeout;
@@ -30,13 +31,11 @@ function scrollSlide (args) {
       prevItem = scrollItems[scrollItems.length - 1];
     };
     let itemsProceed = 0;
-    console.log('%c Remove Classes', 'background-color: red;')
     scrollItems.forEach((item) => {
       itemsProceed++; 
 
       item.classList.remove('ss-move-prev') 
       item.classList.remove('ss-move-next') 
-      console.log(itemsProceed + " | " + scrollItems.length)
 
       if(itemsProceed === scrollItems.length){
         nextItem.classList.add('ss-move-next');
@@ -70,7 +69,6 @@ function scrollSlide (args) {
   }
   
   function changeScrollSlide(moveDown) {
-    console.log(moveDown)
     let activeItem = scrollItems.find((item) => {
       return item.classList.contains('active');
     })
@@ -95,17 +93,50 @@ function scrollSlide (args) {
       activeItem.classList.remove('active');
       
       if(moveDown) {
-        scrollItems[0].classList.add('ss-moving');
-        scrollItems[0].classList.add('active');
+        nextItem = scrollItems[0];
+        nextItem.classList.add('ss-moving');
+        nextItem.classList.add('active');
         
         if(args.uncutMove){ addLoppAnimClasses()}
       } else {
-        scrollItems[scrollItems.length - 1].classList.add('ss-moving');
-        scrollItems[scrollItems.length - 1].classList.add('active');
+        nextItem = scrollItems[scrollItems.length - 1];
+        nextItem .classList.add('ss-moving');
+        nextItem .classList.add('active');
        
         if(args.uncutMove){ addLoppAnimClasses()}
       }  
     }
+    checkChangeIndicator(nextItem)
+  }
+
+  function addIndicators(){
+    const indicatorContainer = document.createElement('div');
+    indicatorContainer.setAttribute('class', 'ss-indicator-container')
+    scrollContainerEle.appendChild(indicatorContainer)
+
+    scrollItems.forEach(() => {
+      let indicator = document.createElement('div');
+      indicator.setAttribute('class', 'ss-indicator');
+      indicatorArr.push(indicator);
+      indicatorContainer.appendChild(indicator);
+    })
+  }
+
+  function checkChangeIndicator (activeItem) {
+    removeActiveIndicator();
+
+    let activeItemIndex = scrollItems.indexOf(activeItem);
+    let activeIndicator = indicatorArr[activeItemIndex];
+    activeIndicator.classList.add('active');
+  }
+
+  function removeActiveIndicator () {
+    let previousActiveItem = document.querySelector( '.ss-indicator.active');
+    try {
+      previousActiveItem.classList.remove('active');
+    } catch (error) {
+      
+    } 
   }
 
   // NOTE:
@@ -113,6 +144,8 @@ function scrollSlide (args) {
   addAnimationClasses()
   if(args.uncutMove){ addLoppAnimClasses()}
   addAnimationDuration()
+  addIndicators()
+  checkChangeIndicator(scrollItems[0])
 
 
   return (function () {
