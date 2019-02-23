@@ -79,7 +79,8 @@
       width: 5px;
       height: 5px;
       border-radius: 50%;
-      background-color: #000; }
+      background-color: #000;
+      cursor: pointer; }
       .ss-container .ss-indicator-container .ss-indicator.active {
         width: 7px;
         height: 7px;

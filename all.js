@@ -139,6 +139,34 @@ function scrollSlide (args) {
     } 
   }
 
+  function changeSlide(index) {
+    let activeItem = scrollItems.find((item) => {
+      return item.classList.contains('active');
+    })
+    let nextItem = scrollItems[index]; 
+    activeItem.classList.add('ss-moving');
+    nextItem.classList.add('ss-moving');
+    activeItem.classList.remove('active');
+    nextItem.classList.add('active');
+
+    if(args.uncutMove){ addLoppAnimClasses()}
+    checkChangeIndicator(nextItem)
+  }
+
+  // TODO:
+  function indicatorChangeSlide () {
+    indicatorArr.forEach(function (item, index){
+      item.addEventListener('click', () => {
+
+        if(!item.classList.contains('active')){
+          changeSlide(index)
+        }
+      })
+    })
+  }
+
+ 
+
   // NOTE:
   // INNER FUNCTION CALLS
   addAnimationClasses()
@@ -147,6 +175,8 @@ function scrollSlide (args) {
   addIndicators()
   checkChangeIndicator(scrollItems[0])
 
+  //TEST:
+  indicatorChangeSlide()
 
   return (function () {
     let eventType;
