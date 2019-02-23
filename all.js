@@ -3,12 +3,20 @@ function scrollSlide (args) {
   const scrollContainerEle = document.querySelector(args.container);
   const scrollItems = Array.from(document.querySelectorAll(`${args.container} ${args.item}`));
   let indicatorArr = [];
+  let activeItem;
 
   let allowAnimation = true;
   let allowAnimationTimeout;
 
   // NOTE:
   // INNER FUNCTIONS DECLARATION
+  function findActiveItem () {
+    activeItem = scrollItems.find((item) => {
+      return item.classList.contains('active');
+    })
+  }
+
+
   function addAnimationClasses() {
     scrollItems.forEach((item) => {
       item.classList.add(args.animType);
@@ -16,13 +24,9 @@ function scrollSlide (args) {
   }
 
   function addLoppAnimClasses () {
-    let activeItem = scrollItems.find((item) => {
-      return item.classList.contains('active');
-    })
-
+    findActiveItem();
     let nextItem = scrollItems[scrollItems.indexOf(activeItem)+1];
     let prevItem = scrollItems[scrollItems.indexOf(activeItem)-1];
-
     if(!nextItem) {
       nextItem = scrollItems[0];
     };
@@ -68,45 +72,26 @@ function scrollSlide (args) {
     }, (args.duration + args.delay) * 1000)
   }
   
-  function changeScrollSlide(moveDown) {
-    let activeItem = scrollItems.find((item) => {
-      return item.classList.contains('active');
-    })
+  function findNextItemIndex(moveDown) {
+    findActiveItem();
     let nextItem; 
   
+    let nextItemIndex;
     if(moveDown) {
       nextItem = scrollItems[scrollItems.indexOf(activeItem)+1]
     } else {
       nextItem = scrollItems[scrollItems.indexOf(activeItem)-1]
     }
-    
     if(nextItem){
-      activeItem.classList.add('ss-moving');
-      nextItem.classList.add('ss-moving');
-      activeItem.classList.remove('active');
-      nextItem.classList.add('active');
-    
-      if(args.uncutMove){ addLoppAnimClasses()}
-    
+      nextItemIndex = scrollItems.indexOf(nextItem)  
     } else {
-      activeItem.classList.add('ss-moving');
-      activeItem.classList.remove('active');
-      
       if(moveDown) {
-        nextItem = scrollItems[0];
-        nextItem.classList.add('ss-moving');
-        nextItem.classList.add('active');
-        
-        if(args.uncutMove){ addLoppAnimClasses()}
+        nextItemIndex = 0;
       } else {
-        nextItem = scrollItems[scrollItems.length - 1];
-        nextItem .classList.add('ss-moving');
-        nextItem .classList.add('active');
-       
-        if(args.uncutMove){ addLoppAnimClasses()}
+        nextItemIndex = scrollItems.length - 1;
       }  
     }
-    if(args.dots){checkChangeIndicator(nextItem)}
+    changeSlide(nextItemIndex)
   }
 
   function addIndicators(){
@@ -122,10 +107,10 @@ function scrollSlide (args) {
     })
   }
 
-  function checkChangeIndicator (activeItem) {
+  function checkChangeIndicator (nextActiveItem) {
     removeActiveIndicator();
 
-    let activeItemIndex = scrollItems.indexOf(activeItem);
+    let activeItemIndex = scrollItems.indexOf(nextActiveItem);
     let activeIndicator = indicatorArr[activeItemIndex];
     activeIndicator.classList.add('active');
   }
@@ -140,9 +125,6 @@ function scrollSlide (args) {
   }
 
   function changeSlide(index) {
-    let activeItem = scrollItems.find((item) => {
-      return item.classList.contains('active');
-    })
     let nextItem = scrollItems[index]; 
     activeItem.classList.add('ss-moving');
     nextItem.classList.add('ss-moving');
@@ -150,14 +132,13 @@ function scrollSlide (args) {
     nextItem.classList.add('active');
 
     if(args.uncutMove){ addLoppAnimClasses()}
-    checkChangeIndicator(nextItem)
+    if(args.dots){checkChangeIndicator(nextItem)}
   }
 
   // TODO:
   function indicatorChangeSlide () {
     indicatorArr.forEach(function (item, index){
       item.addEventListener('click', () => {
-
         if(!item.classList.contains('active')){
           changeSlide(index)
         }
@@ -169,6 +150,7 @@ function scrollSlide (args) {
 
   // NOTE:
   // INNER FUNCTION CALLS
+  findActiveItem();
   addAnimationClasses()
   if(args.uncutMove){ addLoppAnimClasses()}
   addAnimationDuration()
@@ -205,13 +187,13 @@ function scrollSlide (args) {
 
           if(allowAnimation) {
             stopScrollAnim()
-            changeScrollSlide(false)
+            findNextItemIndex(false)
           }
           
         } else {
           if(allowAnimation){
             stopScrollAnim()
-            changeScrollSlide(true);
+            findNextItemIndex(true);
           }         
         }      
         event.preventDefault();
@@ -219,7 +201,7 @@ function scrollSlide (args) {
          if(delta < 0) {
           if(allowAnimation){  
             stopScrollAnim()
-            changeScrollSlide(true);
+            findNextItemIndex(true);
           } 
          }
          event.preventDefault();
