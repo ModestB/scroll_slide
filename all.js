@@ -106,7 +106,7 @@ function scrollSlide (args) {
         if(args.uncutMove){ addLoppAnimClasses()}
       }  
     }
-    checkChangeIndicator(nextItem)
+    if(args.dots){checkChangeIndicator(nextItem)}
   }
 
   function addIndicators(){
@@ -172,11 +172,15 @@ function scrollSlide (args) {
   addAnimationClasses()
   if(args.uncutMove){ addLoppAnimClasses()}
   addAnimationDuration()
-  addIndicators()
-  checkChangeIndicator(scrollItems[0])
+  if(args.dots){
+    addIndicators()
+    checkChangeIndicator(scrollItems[0])
+    
+    //TEST:
+    indicatorChangeSlide() 
+  }
 
-  //TEST:
-  indicatorChangeSlide()
+
 
   return (function () {
     let eventType;
